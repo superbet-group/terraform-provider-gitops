@@ -7,4 +7,3 @@ clean:
 
 test: clean
 	go test ./...
-	

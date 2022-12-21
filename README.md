@@ -2,14 +2,6 @@
   <img src="git.png" alt="gitops provider" width="180"/>
 
   <h3 align="center">Terraform GitOps Provider</h3>
-
-  <p align="center">
-    <a href="https://github.com/tyler-technologies/terraform-provider-gitops/actions?query=workflow%3Abuild"><img alt="Build" src="https://github.com/tyler-technologies/terraform-provider-gitops/workflows/build/badge.svg"></a>
-    <a href="https://github.com/tyler-technologies/terraform-provider-gitops/actions?query=workflow%3Atest"><img alt="Test" src="https://github.com/tyler-technologies/terraform-provider-gitops/workflows/test/badge.svg"></a>
-    <a href="https://github.com/tyler-technologies/terraform-provider-gitops/releases/latest"><img alt="Release" src="https://img.shields.io/github/v/release/tyler-technologies/terraform-provider-gitops"></a>
-    <a href="https://github.com/tyler-technologies/terraform-provider-gitops/releases/latest"><img alt="Downloads" src="https://img.shields.io/github/downloads/tyler-technologies/terraform-provider-gitops/total?color=orange"></a>
-    <a href="https://github.com/tyler-technologies/terraform-provider-gitops/tree/checkout-tfe-support"><img alt="Latest Commit" src="https://img.shields.io/github/last-commit/tyler-technologies/terraform-provider-gitops?color=ff69b4"></a>
-  </p>
 </p>
 
 ---
@@ -23,7 +15,7 @@ This allows you to export terraform managed state into other systems which are c
 by git repositories - for example commit server IPs to DNS config repositories,
 or write out hiera data into your puppet configuration.
 
-> This provider was originally forked from [https://github.com/joestump/terraform-provider-gitfile](https://github.com/joestump/terraform-provider-gitfile). The provider has been rewritten from the ground up to support functionality requirements for a full gitops workflow, and is optimized to work with Terraform Cloud. 
+> This provider was originally forked from [https://github.com/tyler-technologies/terraform-provider-gitops](https://github.com/tyler-technologies/terraform-provider-gitops). 
 
 ## Example:
 ```hcl
@@ -116,4 +108,3 @@ Outputs:
 # License
 
 Apache2 - See the included LICENSE file for more details.
-

@@ -15,4 +15,3 @@ To create a local (non-release) build, just run `make build`
 export GITHUB_TOKEN=some-token-value
 make publish VERSION=1.0 MESSAGE="Initial Release"
 ```
-
