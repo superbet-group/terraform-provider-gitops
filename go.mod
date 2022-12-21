@@ -1,4 +1,4 @@
-module github.com/tyler-technologies/terraform-provider-gitops
+module github.com/superbet-group/terraform-provider-gitops
 
 go 1.18
 

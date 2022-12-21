@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/hashicorp/terraform/plugin"
-	gitops "github.com/tyler-technologies/terraform-provider-gitops/gitops"
+	gitops "github.com/superbet-group/terraform-provider-gitops/gitops"
 )
 
 func main() {

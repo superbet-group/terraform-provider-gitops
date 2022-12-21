@@ -7,7 +7,7 @@ import (
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
-	"github.com/tyler-technologies/terraform-provider-gitops/test/helpers"
+	"github.com/superbet-group/terraform-provider-gitops/test/helpers"
 )
 
 func setup() {

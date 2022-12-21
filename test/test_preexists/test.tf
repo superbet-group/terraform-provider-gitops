@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     gitops = {
-      source  = "tyler-technologies/gitops"
+      source  = "superbet-group/gitops"
       version = "0.0.2-rc"
     }
   }
