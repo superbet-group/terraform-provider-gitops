@@ -23,4 +23,3 @@ unformatted=$(gofmt -l $gofiles)
 echo >&2 "Go files must be formatted with gofmt. Please run: make fmt"
 
 exit 1
-
