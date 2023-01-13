@@ -62,6 +62,10 @@ func CommitCreate(d *schema.ResourceData, m interface{}) error {
 		return err
 	}
 
+	if _, err := gitCommand(c.Path, "pull", "--ff-only", "origin"); err != nil {
+		return err
+	}
+
 	handles := d.Get("handles").(*schema.Set)
 	filepaths := []string{}
 	for _, handle := range handles.List() {
