@@ -106,7 +106,6 @@ func CommitExists(d *schema.ResourceData, m interface{}) (bool, error) {
 	} else {
 		return true, nil
 	}
-
 }
 
 func CommitDelete(d *schema.ResourceData, m interface{}) error {

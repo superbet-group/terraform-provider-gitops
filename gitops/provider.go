@@ -1,9 +1,6 @@
 package gitops
 
 import (
-	"fmt"
-	"strings"
-
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/terraform"
 )
@@ -25,14 +22,14 @@ func Provider() terraform.ResourceProvider {
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
-				ValidateFunc: func(v interface{}, k string) (ws []string, es []error) {
-					value := v.(string)
-					i := strings.IndexRune(value, '/')
-					if i == 0 {
-						es = append(es, fmt.Errorf("Paths which begin with / not allowed in %q", k))
-					}
-					return
-				},
+				// ValidateFunc: func(v interface{}, k string) (ws []string, es []error) {
+				// 	value := v.(string)
+				// 	i := strings.IndexRune(value, '/')
+				// 	if i == 0 {
+				// 		es = append(es, fmt.Errorf("Paths which begin with / not allowed in %q", k))
+				// 	}
+				// 	return
+				// },
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
