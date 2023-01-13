@@ -67,7 +67,7 @@ func read(d *schema.ResourceData) error {
 		branch = strings.TrimRight(string(out), "\n")
 	}
 
-	if _, err := gitCommand(checkout_dir, "pull", "--ff-only", "origin"); err != nil {
+	if _, err := gitCommand(checkout_dir, "pull", "origin"); err != nil {
 		return err
 	}
 
@@ -149,7 +149,7 @@ func CheckoutDelete(d *schema.ResourceData, m interface{}) error {
 		branch = strings.TrimRight(string(out), "\n")
 	}
 
-	if _, err := gitCommand(c.Path, "pull", "--ff-only", "origin"); err != nil {
+	if _, err := gitCommand(c.Path, "pull", "origin"); err != nil {
 		return err
 	}
 
