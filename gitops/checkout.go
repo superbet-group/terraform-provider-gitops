@@ -1,7 +1,6 @@
 package gitops
 
 import (
-	"errors"
 	"fmt"
 	"os"
 	"strings"
@@ -96,13 +95,13 @@ func CheckoutCreate(d *schema.ResourceData, m interface{}) error {
 }
 
 func CheckoutRead(d *schema.ResourceData, m interface{}) error {
-	checkout_id := d.Id()
+	// checkout_id := d.Id()
 	c := getConfig(m)
 
-	if c.Path != checkout_id {
-		err_message := fmt.Sprintf("[ERROR] Checkout directory state mismatch. Checkout Directory is: %s. Expected: %s", c.Path, checkout_id)
-		return errors.New(err_message)
-	}
+	// if c.Path != checkout_id {
+	// 	err_message := fmt.Sprintf("[ERROR] Checkout directory state mismatch. Checkout Directory is: %s. Expected: %s", c.Path, checkout_id)
+	// 	return errors.New(err_message)
+	// }
 
 	lockCheckout(c.Path)
 	defer unlockCheckout(c.Path)
@@ -114,7 +113,7 @@ func CheckoutRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func CheckoutDelete(d *schema.ResourceData, m interface{}) error {
-	checkout_id := d.Id()
+	// checkout_id := d.Id()
 	retry_count := d.Get("retry_count").(int)
 	retry_interval := d.Get("retry_interval").(int)
 
@@ -125,10 +124,10 @@ func CheckoutDelete(d *schema.ResourceData, m interface{}) error {
 	expected_head := d.Get("head").(string)
 	c := getConfig(m)
 
-	if c.Path != checkout_id {
-		err_message := fmt.Sprintf("[ERROR] Checkout directory state mismatch. Checkout Directory is: %s. Expected: %s", c.Path, checkout_id)
-		return errors.New(err_message)
-	}
+	// if c.Path != checkout_id {
+	// 	err_message := fmt.Sprintf("[ERROR] Checkout directory state mismatch. Checkout Directory is: %s. Expected: %s", c.Path, checkout_id)
+	// 	return errors.New(err_message)
+	// }
 
 	lockCheckout(c.Path)
 	defer unlockCheckout(c.Path)
