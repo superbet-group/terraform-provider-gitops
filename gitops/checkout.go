@@ -42,6 +42,13 @@ func checkoutResource() *schema.Resource {
 				Default:     5,
 				Description: "Number of seconds between git commit retries",
 			},
+			"merging_strategy": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				ForceNew:    true,
+				Default:     "--rebase",
+				Description: "Specify how merging gets resolved",
+			},
 		},
 		Create: CheckoutCreate,
 		Read:   CheckoutRead,
@@ -56,6 +63,8 @@ func read(d *schema.ResourceData) error {
 	var branch string
 	var head string
 
+	merging_strategy := d.Get("merging_strategy").(string)
+
 	if out, err := gitCommand(checkout_dir, "config", "--get", "remote.origin.url"); err != nil {
 		return err
 	} else {
@@ -67,7 +76,7 @@ func read(d *schema.ResourceData) error {
 		branch = strings.TrimRight(string(out), "\n")
 	}
 
-	if _, err := gitCommand(checkout_dir, "pull", "origin"); err != nil {
+	if _, err := gitCommand(checkout_dir, "pull", merging_strategy, "origin"); err != nil {
 		return err
 	}
 
@@ -116,6 +125,7 @@ func CheckoutDelete(d *schema.ResourceData, m interface{}) error {
 	// checkout_id := d.Id()
 	retry_count := d.Get("retry_count").(int)
 	retry_interval := d.Get("retry_interval").(int)
+	merging_strategy := d.Get("merging_strategy").(string)
 
 	var repo string
 	var branch string
@@ -149,7 +159,7 @@ func CheckoutDelete(d *schema.ResourceData, m interface{}) error {
 		branch = strings.TrimRight(string(out), "\n")
 	}
 
-	if _, err := gitCommand(c.Path, "pull", "--ff-only", "origin"); err != nil {
+	if _, err := gitCommand(c.Path, "pull", merging_strategy, "origin"); err != nil {
 		return err
 	}
 

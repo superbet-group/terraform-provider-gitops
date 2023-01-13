@@ -43,6 +43,13 @@ func commitResource() *schema.Resource {
 				Default:     5,
 				Description: "Number of seconds between git commit retries",
 			},
+			"merging_strategy": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				ForceNew:    true,
+				Default:     "--rebase",
+				Description: "Specify how merging gets resolved",
+			},
 		},
 		Create: CommitCreate,
 		Read:   CommitRead,
@@ -56,13 +63,15 @@ func CommitCreate(d *schema.ResourceData, m interface{}) error {
 	checkout_dir := m.(*GitOpsConfig).Path
 	retry_count := d.Get("retry_count").(int)
 	retry_interval := d.Get("retry_interval").(int)
+	merging_strategy := d.Get("merging_strategy").(string)
+
 	lockCheckout(checkout_dir)
 	defer unlockCheckout(checkout_dir)
 	if err := cloneIfNotExist(c); err != nil {
 		return err
 	}
 
-	if _, err := gitCommand(c.Path, "pull", "--ff-only", "origin"); err != nil {
+	if _, err := gitCommand(c.Path, "pull", merging_strategy, "origin"); err != nil {
 		return err
 	}
 
