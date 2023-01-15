@@ -107,7 +107,7 @@ func unlockCheckout(checkout_dir string) {
 	gitopsMutexKV.Unlock(checkout_dir)
 }
 
-func push(checkout_dir string, count int, retry_count, retry_interval int) error {
+func push(checkout_dir string, count int, retry_count, retry_interval int, merging_strategy string) error {
 	if err := pull(checkout_dir); err != nil {
 		return errwrap.Wrapf("push error: {{err}}", err)
 	}
@@ -120,7 +120,7 @@ func push(checkout_dir string, count int, retry_count, retry_interval int) error
 		time.Sleep(time.Duration(retry_interval) * time.Second)
 		count++
 
-		return push(checkout_dir, count, retry_count, retry_interval)
+		return push(checkout_dir, count, retry_count, retry_interval, merging_strategy)
 	}
 	return nil
 }

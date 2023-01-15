@@ -71,10 +71,6 @@ func CommitCreate(d *schema.ResourceData, m interface{}) error {
 		return err
 	}
 
-	if _, err := gitCommand(c.Path, "pull", merging_strategy, "origin"); err != nil {
-		return err
-	}
-
 	handles := d.Get("handles").(*schema.Set)
 	filepaths := []string{}
 	for _, handle := range handles.List() {
@@ -87,7 +83,7 @@ func CommitCreate(d *schema.ResourceData, m interface{}) error {
 		return errwrap.Wrapf("push error: {{err}}", err)
 	}
 
-	if err := push(checkout_dir, 0, retry_count, retry_interval); err != nil {
+	if err := push(checkout_dir, 0, retry_count, retry_interval, merging_strategy); err != nil {
 		return err
 	}
 

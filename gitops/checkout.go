@@ -183,7 +183,7 @@ func CheckoutDelete(d *schema.ResourceData, m interface{}) error {
 		return errwrap.Wrapf("push error: {{err}}", err)
 	}
 
-	if err := push(c.Path, 0, retry_count, retry_interval); err != nil {
+	if err := push(c.Path, 0, retry_count, retry_interval, merging_strategy); err != nil {
 		return err
 	}
 
