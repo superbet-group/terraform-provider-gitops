@@ -108,7 +108,7 @@ func unlockCheckout(checkout_dir string) {
 }
 
 func push(checkout_dir string, count int, retry_count, retry_interval int, merging_strategy string) error {
-	if err := pull(checkout_dir); err != nil {
+	if err := pull(checkout_dir, merging_strategy); err != nil {
 		return errwrap.Wrapf("push error: {{err}}", err)
 	}
 
@@ -138,8 +138,8 @@ func commit(checkout_dir, commit_message, commit_body string) error {
 	return nil
 }
 
-func pull(checkout_dir string) error {
-	if _, err := gitCommand(checkout_dir, "pull", "--strategy=ours"); err != nil {
+func pull(checkout_dir string, merging_strategy string) error {
+	if _, err := gitCommand(checkout_dir, "pull", merging_strategy); err != nil {
 		return err
 	}
 	return nil
