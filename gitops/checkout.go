@@ -49,7 +49,7 @@ func checkoutResource() *schema.Resource {
 			},
 			"merging_strategy": {
 				Type:        schema.TypeString,
-				ForceNew:    true,
+				ForceNew:    false,
 				Optional:    true,
 				Default:     DEFAULT_MERGING_STRATEGY,
 				Description: "Specify how merging gets resolved",
@@ -57,7 +57,7 @@ func checkoutResource() *schema.Resource {
 		},
 		Create: CheckoutCreate,
 		Read:   CheckoutRead,
-		Update: nil,
+		Update: CheckoutCreate,
 		Delete: CheckoutDelete,
 	}
 }
