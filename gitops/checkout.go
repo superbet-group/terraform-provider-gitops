@@ -1,12 +1,17 @@
 package gitops
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"strings"
 
 	"github.com/hashicorp/errwrap"
 	"github.com/hashicorp/terraform/helper/schema"
+)
+
+const (
+	DEFAULT_MERGING_STRATEGY = "--rebase"
 )
 
 func checkoutResource() *schema.Resource {
@@ -45,8 +50,7 @@ func checkoutResource() *schema.Resource {
 			"merging_strategy": {
 				Type:        schema.TypeString,
 				Optional:    true,
-				ForceNew:    true,
-				Default:     "--rebase",
+				Default:     DEFAULT_MERGING_STRATEGY,
 				Description: "Specify how merging gets resolved",
 			},
 		},
@@ -64,6 +68,9 @@ func read(d *schema.ResourceData) error {
 	var head string
 
 	merging_strategy := d.Get("merging_strategy").(string)
+	if merging_strategy == "" {
+		merging_strategy = DEFAULT_MERGING_STRATEGY
+	}
 
 	if out, err := gitCommand(checkout_dir, "config", "--get", "remote.origin.url"); err != nil {
 		return err
@@ -104,13 +111,13 @@ func CheckoutCreate(d *schema.ResourceData, m interface{}) error {
 }
 
 func CheckoutRead(d *schema.ResourceData, m interface{}) error {
-	// checkout_id := d.Id()
+	checkout_id := d.Id()
 	c := getConfig(m)
 
-	// if c.Path != checkout_id {
-	// 	err_message := fmt.Sprintf("[ERROR] Checkout directory state mismatch. Checkout Directory is: %s. Expected: %s", c.Path, checkout_id)
-	// 	return errors.New(err_message)
-	// }
+	if c.Path != checkout_id {
+		err_message := fmt.Sprintf("[ERROR] Checkout directory state mismatch. Checkout Directory is: %s. Expected: %s", c.Path, checkout_id)
+		return errors.New(err_message)
+	}
 
 	lockCheckout(c.Path)
 	defer unlockCheckout(c.Path)
@@ -122,7 +129,7 @@ func CheckoutRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func CheckoutDelete(d *schema.ResourceData, m interface{}) error {
-	// checkout_id := d.Id()
+	checkout_id := d.Id()
 	retry_count := d.Get("retry_count").(int)
 	retry_interval := d.Get("retry_interval").(int)
 	merging_strategy := d.Get("merging_strategy").(string)
@@ -134,10 +141,10 @@ func CheckoutDelete(d *schema.ResourceData, m interface{}) error {
 	expected_head := d.Get("head").(string)
 	c := getConfig(m)
 
-	// if c.Path != checkout_id {
-	// 	err_message := fmt.Sprintf("[ERROR] Checkout directory state mismatch. Checkout Directory is: %s. Expected: %s", c.Path, checkout_id)
-	// 	return errors.New(err_message)
-	// }
+	if c.Path != checkout_id {
+		err_message := fmt.Sprintf("[ERROR] Checkout directory state mismatch. Checkout Directory is: %s. Expected: %s", c.Path, checkout_id)
+		return errors.New(err_message)
+	}
 
 	lockCheckout(c.Path)
 	defer unlockCheckout(c.Path)
